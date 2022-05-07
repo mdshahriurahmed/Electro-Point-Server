@@ -58,13 +58,13 @@ async function run() {
 
         })
 
-        //delete inventory item
-        app.delete('/manageInventory/:id', async (req, res) => {
-            const id = req.params.id;
-            const query = { _id: ObjectId(id) };
-            const result = await inventorycollection.deleteOne(query);
-            res.send(result);
-        })
+        // //delete inventory item
+        // app.delete('/manageInventory/:id', async (req, res) => {
+        //     const id = req.params.id;
+        //     const query = { _id: ObjectId(id) };
+        //     const result = await inventorycollection.deleteOne(query);
+        //     res.send(result);
+        // })
 
 
     }
