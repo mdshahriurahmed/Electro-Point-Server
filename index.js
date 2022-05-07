@@ -27,12 +27,35 @@ async function run() {
             const items = await cursor.toArray();
             res.send(items);
         })
-
+        // read all data by id for client side
         app.get('/inventory/:id', async (req, res) => {
             const id = req.params.id;
             const query = { _id: ObjectId(id) }
             const inventory = await inventorycollection.findOne(query);
             res.send(inventory);
+        })
+
+
+        //update quantity after delivered
+        app.put('/inventory/:id', async (req, res) => {
+            const id = req.params.id;
+            const updatedQuantity = req.body;
+            const filter = { _id: ObjectId(id) }
+            const options = { upsert: true };
+            const updatedInventory = {
+                $set: {
+                    img: updatedQuantity.img,
+                    quantity: updatedQuantity.quantity,
+                    name: updatedQuantity.name,
+                    price: updatedQuantity.price,
+                    details: updatedQuantity.details,
+                    supplier: updatedQuantity.supplier,
+                    sold: updatedQuantity.sold
+                }
+            };
+            const result = await inventorycollection.updateOne(filter, updatedInventory, options);
+            res.send(result);
+
         })
 
 
