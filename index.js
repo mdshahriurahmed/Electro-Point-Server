@@ -23,12 +23,6 @@ async function run() {
         await client.connect();
         const inventorycollection = client.db("electro-point").collection("Inventories");
 
-        //AUTH 
-        app.POST('./login', async (req, res) => {
-            const user = req.body;
-            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: `1d` });
-            res.send({ accessToken });
-        })
 
 
         //SERVICES API
