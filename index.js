@@ -74,6 +74,16 @@ async function run() {
             res.send(result);
         })
 
+
+        //myItem page data filtered by email
+        app.get('/myItem', async (req, res) => {
+            const email = req.query.email;
+            const query = { email: email };
+            const cursor = inventorycollection.find(query);
+            const items = await cursor.toArray();
+            res.send(items);
+        })
+
     }
     finally {
         // await client.close();
@@ -81,9 +91,6 @@ async function run() {
 }
 
 run().catch(console.dir);
-
-
-
 
 
 app.get('/', (req, res) => {
