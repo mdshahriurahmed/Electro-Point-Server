@@ -1,5 +1,6 @@
 const express = require('express');
 const cors = require('cors');
+const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const app = express();
 const { MongoClient, ServerApiVersion, ObjectId } = require('mongodb');
@@ -21,6 +22,16 @@ async function run() {
     try {
         await client.connect();
         const inventorycollection = client.db("electro-point").collection("Inventories");
+
+        //AUTH 
+        app.POST('./login', async (req, res) => {
+            const user = req.body;
+            const accessToken = jwt.sign(user, process.env.ACCESS_TOKEN_SECRET, { expiresIn: `1d` });
+            res.send({ accessToken });
+        })
+
+
+        //SERVICES API
         app.get('/inventories', async (req, res) => {
             const query = {};
             const cursor = inventorycollection.find(query);
